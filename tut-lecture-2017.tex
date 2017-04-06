@@ -478,12 +478,12 @@ with
 {\small
 \begin{equation}
 \begin{split}
-  \vmu_k &= \E_k^-[ \vh(\vx_{k}) ] \\
-   \MS_k &= \Cov_k^-[ \vh(\vx_{k}) ] + \MR \\
-   \MC_k &= \E_k^-\left[ (\vx_{k} - \vm_{k}^-) (\vh(\vx_{k}) - \vmu_k)^\T \right] \\
-   \MK_k &= \MC_k \, \MS_k^{-1} \\
-   \vm_k &= \vm_k^- + \MK_k \, (\vy_k - \vmu_k) \\
-   \MP_k &= \MP_k^- - \MK_k \, \MS_k \, \MK_k^\T,
+  \vmu_k &= \E_k^-[ \vh(\vx_{k}) ], \\
+   \MS_k &= \Cov_k^-[ \vh(\vx_{k}) ] + \MR, \\
+   \MC_k &= \E_k^-\left[ (\vx_{k} - \vm_{k}^-) (\vh(\vx_{k}) - \vmu_k)^\T \right], \\
+   \MK_k &= \MC_k \, \MS_k^{-1}, \\
+   \vm_k &= \vm_k^- + \MK_k \, (\vy_k - \vmu_k), \\
+   \MP_k &= \MP_k^- - \MK_k \, \MS_k \, \MK_k^\T.
 \end{split}
 \nonumber
 \end{equation}
@@ -539,7 +539,7 @@ with
 %
 \begin{equation}
 \begin{split}
-  \mathrm{MSE}(\MA,\vb) = \E\left[ \| \vg(|vx) - \MA \, \vx - \vb \|^2 \right].
+  \mathrm{MSE}(\MA,\vb) = \E\left[ \| \vg(\vx) - \MA \, \vx - \vb \|^2 \right].
 \end{split}
 \nonumber
 \end{equation}
