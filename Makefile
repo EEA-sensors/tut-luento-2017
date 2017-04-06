@@ -2,13 +2,13 @@ OPTS = -z -Ppdf -Pcmz -Pamz -Poutline -G0 -j0 -f -D 600 -Z -Pdownload35
 
 DEPS = 
 
-all: spde-lecture.pdf spde-handout.pdf
+all: tut-lecture-2017.pdf tut-handout-2017.pdf
 
 force:
 	rm -f *.pdf
 	make
 
-spde-handout.tex: spde-lecture.tex
+tut-handout-2017.tex: tut-lecture-2017.tex
 	sed 's/,presentation/,handout/' < $< > $@
 
 
