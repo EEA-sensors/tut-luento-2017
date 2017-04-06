@@ -1,0 +1,185 @@
+
+** Statistical linearization and statistical linear regression
+
+* Statistical linearization
+
+We wish to approximate
+
+  y = g(x)
+
+with a linear function, say
+
+  y = A (x - m) + b
+
+Obviously one option is to use Taylor series centered at x=m, which leads to
+
+  A = G(m)
+  b = g(m)
+
+and we get the extended Kalman filter. But this is not the only option.
+
+Instead, consider minimization of the error
+
+  MSE(A,b) = E[||g(x) - A x - b||^2]
+
+where E[] is w.r.t. some x ~ p(x) with E[x] = m and Cov[x] = P.
+
+We get
+
+  ||g(x) - A (x - m) - b||^2
+  = (g(x) - A (x - m) - b)^T (g(x) - A (x - m) - b)
+  = g^T(x) g(x) - (x - m)^T A^T g(x) - b^T g(x)
+    - g^T(x) A (x - m) + (x - m)^T A^T A (x - m) + b^T A (x - m)
+    - g^T(x) b + (x - m)^T A^T b + b^T b
+  = g^T(x) g(x) 
+  - 2 g^T(x) A (x - m) + tr{ A (x - m) (x - m)^T A^T}
+    + 2 (x - m)^T A^T b
+  - 2 g^T(x) b + b^T b
+
+Taking expectation and ignoring terms not dependent on A and b gives
+
+  E[||g(x) - A (x - m) - b||^2]
+  = E[g^T(x) g(x)]
+  - 2 E[g^T(x) A (x - m)] + tr{ A P A^T } + 2 E[(x - m)]^T A^T b
+  - 2 E[g^T(x)] b + b^T b
+  = E[g^T(x) g(x)]
+  - 2 E[g^T(x) A (x - m)] + tr{ A P A^T} 
+  - 2 E[g^T(x)] b + b^T b
+
+Setting derivative w.r.t. b to zero gives
+
+  dMSE/db = - 2 E[g(x)] + 2 b = 0
+
+leading to
+
+  b = E[g(x)]
+
+Setting the derivative w.r.t. A to zero gives
+
+  dMSE/dA = -2 E[g(x) (x - m)^T] + 2 A P = 0
+
+and
+
+  A = E[g(x) (x - m)^T] P^{-1}
+  = E[(g(x) - b) (x - m)^T] P^{-1}
+
+Thus the approximation is, for now
+
+  y = A (x - m_0) + b
+
+where b and A are as above. This is called classical *statistical linearization* (SL).
+
+However, now the expectation is indeed correct
+
+  E[A (x - m) + b] = E[g(x)],
+
+but the covariance is not
+
+  E[(A (x - m) + b - b) (A (x - m) + b - b)^T]
+  = E[A (x - m) (x - m)^T A^T]
+  = A P A^T != Cov[g(x)]   { in general }
+
+* Statistical linear regression
+
+We can now replace the deterministic approximation on g(x) with
+
+  y = A x + b + e,
+
+where e ~ N(0,Sigma) is a pseudo-noise. The covariance is now
+
+  E[(A (x - m) + b + e - b) (A (x - m) + b + e - b)^T]
+  = A P A^T + Sigma,
+
+which can be forced to have the correct covariance by putting
+
+  Sigma = Cov[g(x)] - A P A^T
+
+This is called *statistical linear regression* (SLR).
+
+Let us now use this approximation in the prediction equations
+
+  x_{k} = f(x_{k-1}) + q_{k-1},
+
+where q_{k-1} ~ N(0,Q). 
+
+When in the statistical linear regression we put m = m_{k-1} and P = P_{k-1} we get an approximation of the form
+
+  x_{k} = F (x_{k-1} - m_{k-1}) + b + e + q_{k-1},
+
+with
+
+  b = E_{k-1}[f(x_{k-1})]
+  F = E_{k-1}[(f(x_{k-1}) - b) (x_{k-1} - m_{k-1})^T] P_{k-1}^{-1}
+  Cov_{k-1}[e] = Cov_{k-1}[f(x_{k-1})] - F P_{k-1} F^T
+
+which leads to
+
+  m_k^- = E_{k-1}[f(x_{k-1})]
+  P_k^- = Cov_{k-1}[f(x_{k-1})] + Q
+
+because the mean and covariance are exact. This is indeed the Gaussian filter prediction - leading to UKFs and other sigma-point filters.
+
+For the update we consider
+
+  y_k = h(x_k) + r_k,
+
+where r_k ~ N(0,R), which by using statistical linear regression with m = m_k^- and P = P_k^- gives
+
+  y_{k} = H (x_{k} - m_{k}^-) + mu_k + e'_{k} + r_{k},
+
+with
+
+  mu_k = E_k^-[h(x_{k})]
+  H    = E_k^-[(h(x_{k}) - mu_k) (x_{k} - m_{k}^-)^T] [P_{k}^-]^{-1}
+  Cov_k^-[e'] = Cov_k^-[h(x_{k})] - H P_{k}^- H^T
+
+The joint mean and covariance of x_k and y_k are then given as
+
+  E_k^-[ (x_k,y_k) ]
+  = ( m_k^-, mu_k )
+  Cov_k^-[ (x_k,y_k) ]
+  = ( P_k^-  E_k^-[(x_{k} - m_{k}^-) (h(x_{k}) - mu_k)^T];
+      E_k^-[(h(x_{k}) - mu) (x_{k} - m_{k}^-)^T]  Cov_k^-[h(x_{k})] + R )
+
+which by Gaussian conditioning leads to
+
+  mu_k = E_k^-[h(x_{k})]
+   S_k = Cov_k^-[h(x_{k})] + R
+   C_k = E_k^-[(x_{k} - m_{k}^-) (h(x_{k}) - mu_k)^T
+   K_k = C_k S_k^{-1}
+   m_k = m_k^- + K_k (y_k - mu_k)
+   P_k = P_k^- - K_k S_k K_k^T,
+
+which is exactly the Gaussian (moment matching) filter.
+
+We can also derive the corresponding smoother similarly.
+
+* Extensions and connection
+
+We have arbitrarily chosen to do the statistical linear regression with respect to the priors N(m_{k-1},P_{k-1}) and N(m_k^-,P_k^-) -- but we don't need to do that.
+
+This leads to e.g. posterior-linearization filters and smoothers that Angel will talk about next.
+
+If we didn't use the noise e in
+
+  y = A x + b + e
+
+we would recover the statistical linerization and the statistically linearized filter -- which underestimates the covariances.
+
+If we do the statistical linearization with prior means and P_k, P_k^-
+--> 0 we obtain the Taylor series approximation and EKF.
+
+* Summary
+
+- In *statistical linearization* (SL) we approximate y = g(x) as y = A (x - m) + b, where A and b are selected to minize
+
+  MSE(A,b) = E[||g(x) - A x - b||^2]
+
+- In *statistical linear regression* (SLR) we use y = A x + b + e, where e is a Gaussian pseudo-noise that makes the covariance exact.
+
+- By forming a filter with SLR we get Gaussian filter, UKFs and other related filters.
+
+- By using SL we get the classical statistically linearized filter and also EKF as a special case.
+
+- We can also do SL and SLR w.r.t. other than the prior - leading to posterior linearization filters (and smoothers).
+
