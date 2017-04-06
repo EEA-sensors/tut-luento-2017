@@ -1,0 +1,472 @@
+\documentclass[first=dgreen,second=purple,presentation]{elecslides}
+%\documentclass{elecslides} % DEFAULT
+%\documentclass[first=purple,second=lgreen,logo=redque,normaltitle,nofoot]{aaltoslides} % SOME OPTION EXAMPLES
+
+\usepackage[latin9]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{animate}
+\usepackage{media9}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+\usepackage{lcg}
+\reinitrand[first=1, last=3, seed=-1]
+\newcommand{\alogoname}[1]{Aalto_ELEC_EN_13_RGB_#1.png}
+
+\rand
+%\renewcommand{\smalllogo}{\includegraphics[height=\smalllogoheight]{\alogoname{\arabic{rand}}}}
+\renewcommand{\smalllogo}{\includegraphics[height=\smalllogoheight]{\alogoname{1}}}
+
+\graphicspath{{.}{../pics/}}
+
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\mathbold}[1]{\bm{#1}}
+
+
+\newcommand{\T}[0]{\mathsf{T}}
+
+%\newcommand{\diff}[0]{\mathrm{d}}
+\newcommand*{\diff}{\mathop{}\!\mathrm{d}}
+\newcommand{\Dt}[0]{\delta t}
+\newcommand{\Dx}[0]{\delta \vec{x}}
+\newcommand{\Eg}[0]{\EuScript{E}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\chol}{chol}
+\DeclareMathOperator{\dchol}{dchol}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\N}{N}
+\DeclareMathOperator{\gammad}{Gamma}
+\DeclareMathOperator{\expd}{Exp}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\KL}{KL}
+\DeclareMathOperator{\U}{U}
+
+\newcommand{\valpha}[0]{\mathbold{\alpha}}
+\newcommand{\vbeta}[0]{\mathbold{\beta}}
+\newcommand{\vchi}[0]{\mathbold{\chi}}
+\newcommand{\vepsilon}[0]{\mathbold{\varepsilon}}
+\newcommand{\veta}[0]{\mathbold{\eta}}
+\newcommand{\vmu}[0]{\mathbold{\mu}}
+\newcommand{\vxi}[0]{\mathbold{\xi}}
+\newcommand{\vtheta}[0]{\mathbold{\theta}}
+\newcommand{\vTheta}[0]{\mathbold{\Theta}}
+\newcommand{\vzeta}[0]{\mathbold{\zeta}}
+\newcommand{\MPsi}[0]{\mathbold{\Psi}}
+\newcommand{\MPhi}[0]{\mathbold{\Phi}}
+\newcommand{\MSigma}[0]{\mathbold{\Sigma}}
+
+\newcommand{\RL}{\mathrm{L}}
+\newcommand{\RM}{\mathrm{M}}
+\newcommand{\RQ}{\mathrm{Q}}
+\newcommand{\RS}{\mathrm{S}}
+\newcommand{\RU}{\mathrm{U}}
+
+\newcommand{\va}{\mbf{a}}
+\newcommand{\vb}{\mbf{b}}
+\newcommand{\vc}{\mbf{c}}
+\newcommand{\vd}{\mbf{d}}
+\newcommand{\ve}{\mbf{e}}
+\newcommand{\vf}{\mbf{f}}
+\newcommand{\vg}{\mbf{g}}
+\newcommand{\vh}{\mbf{h}}
+\newcommand{\vi}{\mbf{i}}
+\newcommand{\vj}{\mbf{j}}
+\newcommand{\vk}{\mbf{k}}
+\newcommand{\vl}{\mbf{l}}
+\newcommand{\vm}{\mbf{m}}
+\newcommand{\vn}{\mbf{n}}
+\newcommand{\vo}{\mbf{o}}
+\newcommand{\vp}{\mbf{p}}
+\newcommand{\vq}{\mbf{q}}
+\newcommand{\vr}{\mbf{r}}
+\newcommand{\vs}{\mbf{s}}
+\newcommand{\vu}{\mbf{u}}
+\newcommand{\vv}{\mbf{v}}
+\newcommand{\vw}{\mbf{w}}
+\newcommand{\vx}{\mbf{x}}
+\newcommand{\vy}{\mbf{y}}
+\newcommand{\vz}{\mbf{z}}
+
+\newcommand{\MA}{\mbf{A}}
+\newcommand{\MB}{\mbf{B}}
+\newcommand{\MC}{\mbf{C}}
+\newcommand{\MD}{\mbf{D}}
+\newcommand{\MF}{\mbf{F}}
+\newcommand{\MG}{\mbf{G}}
+\newcommand{\MH}{\mbf{H}}
+\newcommand{\MI}{\mbf{I}}
+\newcommand{\MJ}{\mbf{J}}
+\newcommand{\MK}{\mbf{K}}
+\newcommand{\ML}{\mbf{L}}
+\newcommand{\MM}{\mbf{M}}
+\newcommand{\MP}{\mbf{P}}
+\newcommand{\MQ}{\mbf{Q}}
+\newcommand{\MR}{\mbf{R}}
+\newcommand{\MS}{\mbf{S}}
+\newcommand{\MT}{\mbf{T}}
+\newcommand{\MV}{\mbf{V}}
+\newcommand{\MX}{\mbf{X}}
+\newcommand{\MY}{\mbf{Y}}
+
+
+\mode<presentation>
+{
+  \setbeamercovered{transparent}
+}
+
+\mode<handout>
+{
+  %\beamertemplatesolidbackgroundcolor{black!5}
+}
+
+\title{Statistical linearization and statistical linear regression}
+
+\aaltofootertext{Statistical linearization and statistical linear regression}{Simo S\"arkk\"a}{\insertframenumber\,/\,\inserttotalframenumber\ }
+
+\author{{\bf Simo S\"arkk\"a}}
+
+\institute{Aalto University, Finland}
+
+\date{}
+
+%\date{Version 1.0, \today}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\aaltotitleframe
+
+\begin{frame}
+  \frametitle{Contents}
+  \tableofcontents[pausesections]
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Statistical linearization}
+
+\begin{frame}
+ \frametitle{Linear approximation of a non-linearity}
+
+\begin{itemize}[<+->]
+\item We wish to approximate the \alert{transformation}
+%
+\begin{equation}
+\begin{split}
+  \vy = \vg(\vx)
+\end{split}
+\nonumber
+\end{equation}
+
+\item We choose the approximation to be a \alert{linear function}, say
+%
+\begin{equation}
+\begin{split}
+  \vy = \MA \, (\vx - \vm) + \vb.
+\end{split}
+\nonumber
+\end{equation}
+
+\item One option is to use \alert{Taylor series} centered at $\vx = \vm$, which leads to
+%
+\begin{equation}
+\begin{split}
+  \MA &= \MG_x(\vm) \\
+  \vb &= \vg(\vm)
+\end{split}
+\nonumber
+\end{equation}
+%
+\item Leads to the \alert{extended Kalman filter} (and smoother).
+
+\item But this is not the only option to choose $\MA$ and $\vb$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Statistical linearization}
+
+\begin{itemize}[<+->]
+\item Instead, consider minimization of the error
+%
+\begin{equation}
+\begin{split}
+  \mathrm{MSE}(\MA,\vb) = \E\left[ \| \vg(|vx) - \MA \, \vx - \vb \|^2 \right]
+\end{split}
+\nonumber
+\end{equation}
+%
+%where $\E[]$ is
+w.r.t. some $\vx \sim p(\vx)$ with $\E[\vx] = \vm$ and $\Cov[\vx] = \MP$.
+
+\item We get
+%
+\begin{equation}
+\begin{split}
+  &\| \vg(\vx) - \MA \, (\vx - \vm) - \vb\|^2 \\
+  &= \vg^\T(\vx)\, \vg(\vx) 
+  - 2 \, \vg^\T(\vx) \, \MA \, (\vx - \vm) + \tr \left\{ \MA \, (\vx - \vm) \, (\vx - \vm)^\T \, \MA^T \right\} \\
+  &\qquad + 2 \, (\vx - \vm)^\T \MA^\T \vb
+    - 2 \vg^\T(\vx) \, \vb + \vb^\T \vb
+\end{split}
+\nonumber
+\end{equation}
+
+\item Taking expectation gives
+%
+\begin{equation}
+\begin{split}
+  &\E\left[ \| \vg(\vx) - \MA \, (\vx - \vm) - \vb\|^2 \right] 
+  = \E\left[ \vg^\T(\vx) \, \vg(\vx)\right] \\
+  &- 2 \, \E\left[ \vg^\T(\vx) \, \MA \, (\vx - \vm) \right] + \tr\left\{ \MA \, \MP \, \MA^\T \right\} 
+  - 2 \, \E\left[ \vg^\T(\vx)\right] \, \vb + \vb^\T \vb
+\end{split}
+\nonumber
+\end{equation}
+%
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Statistical linearization (cont.)}
+
+\begin{itemize}[<+->]
+\item Let us \alert{set the derivatives} w.r.t. $\vb$ and $\MA$ to \alert{zero}:
+%
+\begin{equation}
+\begin{split}
+  \frac{\partial \mathrm{MSE}}{\partial \vb} &= - 2 \, \E\left[ \vg(\vx) \right] + 2 \, \vb = 0 \\
+  \frac{\partial \mathrm{MSE}}{\partial \MA} &= -2 \, \E\left[ \vg(\vx) \, (\vx - \vm)^\T \right] + 2 \, \MA \, \MP = 0
+\end{split}
+\nonumber
+\end{equation}
+%
+\item This leads to the \alert{optimal linearization parameters}
+%
+\begin{equation}
+\begin{split}
+  \vb &= \E\left[ \vg(\vx) \right] \\
+  \MA &= \E\left[ \vg(\vx) \, (\vx - \vm)^\T \right] \, \MP^{-1} \\
+  &= \E\left[ (\vg(\vx) - \vb) \, (\vx - \vm)^\T \right] \, \MP^{-1}
+\end{split}
+\nonumber
+\end{equation}
+
+\item Thus the \alert{linearization approximation} is, for now
+%
+\begin{equation}
+\begin{split}
+  \vy = \MA \, (\vx - \vm) + \vb
+\end{split}
+\nonumber
+\end{equation}
+
+\item This is called classical \alert{statistical linearization (SL)}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Statistical linearization: properties}
+
+\begin{itemize}[<+->]
+\item The \alert{expectation} of SL is indeed \alert{exact}:
+%
+\begin{equation}
+\begin{split}
+  \E\left[ \MA \, (\vx - \vm) + \vb \right] = \E\left[ \vg(\vx) \right]
+\end{split}
+\nonumber
+\end{equation}
+
+\item The \alert{covariance is not exact}:
+%
+\begin{equation}
+\begin{split}
+  &\E\left[ (\MA \, (\vx - \vm) + \vb - \vb) \, (\MA \, (\vx - \vm) + \vb - \vb)^\T \right] \\
+  &= \E\left[ \MA \, (\vx - \vm) \, (\vx - \vm)^\T \MA^\T \right] \\
+  &= \MA \, \MP \, \MA^\T \ne \Cov\left[ \vg(\vx) \right]  \qquad  \{ \text{ in general } \}
+\end{split}
+\nonumber
+\end{equation}
+
+\item The corresponding filter and smoother have the \alert{same limitations}.
+
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Statistical linear regression}
+
+\begin{frame}
+ \frametitle{Statistical linear regression}
+
+\begin{itemize}[<+->]
+\item We can now replace the deterministic approximation on $\vg(\vx)$ with \alert{stochastic approximation}
+%
+\begin{equation}
+\begin{split}
+  \vy = \MA \, \vx + \vb + \ve,
+\end{split}
+\nonumber
+\end{equation}
+%
+where $\ve \sim \N(0,\MSigma)$ is a \alert{pseudo-noise}.
+
+\item The \alert{covariance} is now
+%
+\begin{equation}
+\begin{split}
+  &\E\left[ (\MA \, (\vx - \vm) + \vb + \ve - \vb) \, (\MA \, (\vx - \vm) + \vb + \ve - \vb)^\T \right] \\
+  &= \MA \, \MP \, \MA^\T + \MSigma
+\end{split}
+\nonumber
+\end{equation}
+
+\item Thus, we can \alert{force the correct covariance} by putting
+%
+\begin{equation}
+\begin{split}
+  \MSigma = \Cov\left[ \vg(\vx) \right] - \MA \, \MP \, \MA^\T
+\end{split}
+\nonumber
+\end{equation}
+
+\item This is called \alert{statistical linear regression (SLR)}.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Statistical linear regression: prediction step}
+
+\begin{itemize}[<+->]
+\item Let us use the SLR approximation on the \alert{dynamic model}:
+%
+\begin{equation}
+\begin{split}
+  \vx_{k} = \vf(\vx_{k-1}) + \vq_{k-1},
+\end{split}
+\nonumber
+\end{equation}
+%
+where $\vq_{k-1} \sim \N(0,\MQ)$. 
+
+\item When in SLR we put $\vm = \vm_{k-1}$ and $\MP = \MP_{k-1}$ we get
+%
+\begin{equation}
+\begin{split}
+  \vx_{k} = \MF \, (\vx_{k-1} - \vm_{k-1}) + \vb + \ve + \vq_{k-1},
+\end{split}
+\nonumber
+\end{equation}
+%
+with
+%
+\begin{equation}
+\begin{split}
+  \vb &= \E_{k-1}\left[ \vf(\vx_{k-1}) \right] \\
+  \MF &= \E_{k-1}\left[ (\vf(\vx_{k-1}) - \vb) \, (\vx_{k-1} - \vm_{k-1})^\T \right] \, \MP_{k-1}^{-1} \\
+  \Cov_{k-1}[\ve] &= \Cov_{k-1}\left[ \vf(\vx_{k-1}) \right] - \MF \, \MP_{k-1} \, \MF^\T
+\end{split}
+\nonumber
+\end{equation}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Statistical linear regression: prediction step (cont.)}
+
+\begin{itemize}[<+->]
+\item This now gives the \alert{prediction step}
+%
+\begin{equation}
+\begin{split}
+  \vm_k^- &= \E_{k-1}[ \vf(\vx_{k-1}) ] \\
+  \MP_k^- &= \Cov_{k-1}[ \vf(\vx_{k-1}) ] + \MQ
+\end{split}
+\nonumber
+\end{equation}
+%
+because the \alert{mean and covariance are exact}.
+
+\item This is indeed the \alert{Gaussian filter prediction} -- leading to UKFs and other sigma-point filters.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Statistical linear regression: update step}
+
+\begin{itemize}[<+->]
+\item For the \alert{measurement update} we consider
+%
+\begin{equation}
+\begin{split}
+  \vy_k = \vh(\vx_k) + \vr_k,
+\end{split}
+\nonumber
+\end{equation}
+%
+where $\vr_k \sim \N(0,\MR)$.
+
+\item \alert{Using SLR} with $\vm = \vm_k^-$ and $\MP = \MP_k^-$ gives
+%
+\begin{equation}
+\begin{split}
+  \vy_{k} = \MH \, (\vx_{k} - \vm_{k}^-) + \vmu_k + \ve'_{k} + \vr_{k},
+\end{split}
+\nonumber
+\end{equation}
+%
+with
+%
+\begin{equation}
+\begin{split}
+ \vmu_k &= \E_k^-[ \vh(\vx_{k})] \\
+  \MH    &= \E_k^-\left[ (\vh(\vx_{k}) - \vmu_k) \, (\vx_{k} - \vm_{k}^-)^\T \right] \, \Big[ P_{k}^- \Big]^{-1} \\
+  \Cov_k^-[e'] &= \Cov_k^-[ \vh(\vx_{k}) ] - \MH \, \MP_{k}^- \, \MH^\T
+\end{split}
+\nonumber
+\end{equation}
+%
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{Summary}
+\begin{itemize}[<+->]
+\item Gaussian processes (GPs) can be used as \alert{priors in inverse problems}.
+\item Applications in e.g. \alert{brain imaging, tomography, positioning, and Kriging}.
+\item GPs have representations as \alert{solutions to SPDEs}.
+\item SPDE methods can be used to \alert{speed up GP inference}.
+\item In temporal models we can use \alert{Kalman/Bayesian filters and smoothers}.
+\item Opens up new paths towards \alert{non-linear GP models}.
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
