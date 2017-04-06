@@ -154,7 +154,7 @@ which is exactly the Gaussian (moment matching) filter.
 
 We can also derive the corresponding smoother similarly.
 
-* Extensions and connection
+* Discussion and connections
 
 We have arbitrarily chosen to do the statistical linear regression with respect to the priors N(m_{k-1},P_{k-1}) and N(m_k^-,P_k^-) -- but we don't need to do that.
 

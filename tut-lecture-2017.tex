@@ -142,7 +142,7 @@
 \AtBeginSection[]
 {
   \begin{frame}<beamer>
-    \frametitle{Contents}
+    \frametitle{Learning Outcomes}
     \tableofcontents[currentsection]
   \end{frame}
 }
@@ -153,7 +153,7 @@
 \aaltotitleframe
 
 \begin{frame}
-  \frametitle{Contents}
+  \frametitle{Learning Outcomes}
   \tableofcontents[pausesections]
   % You might wish to add the option [pausesections]
 \end{frame}
@@ -170,7 +170,7 @@
 %
 \begin{equation}
 \begin{split}
-  \vy = \vg(\vx)
+  \vy = \vg(\vx).
 \end{split}
 \nonumber
 \end{equation}
@@ -188,15 +188,15 @@
 %
 \begin{equation}
 \begin{split}
-  \MA &= \MG_x(\vm) \\
-  \vb &= \vg(\vm)
+  \MA &= \MG_x(\vm), \\
+  \vb &= \vg(\vm).
 \end{split}
 \nonumber
 \end{equation}
 %
 \item Leads to the \alert{extended Kalman filter} (and smoother).
 
-\item But this is not the only option to choose $\MA$ and $\vb$.
+\item But this is \alert{not the only option} to choose $\MA$ and $\vb$.
 \end{itemize}
 \end{frame}
 
@@ -204,11 +204,11 @@
  \frametitle{Statistical linearization}
 
 \begin{itemize}[<+->]
-\item Instead, consider minimization of the error
+\item Instead, consider \alert{minimization of the error}
 %
 \begin{equation}
 \begin{split}
-  \mathrm{MSE}(\MA,\vb) = \E\left[ \| \vg(|vx) - \MA \, \vx - \vb \|^2 \right]
+  \mathrm{MSE}(\MA,\vb) = \E\left[ \| \vg(\vx) - \MA \, \vx - \vb \|^2 \right]
 \end{split}
 \nonumber
 \end{equation}
@@ -222,21 +222,21 @@ w.r.t. some $\vx \sim p(\vx)$ with $\E[\vx] = \vm$ and $\Cov[\vx] = \MP$.
 \begin{split}
   &\| \vg(\vx) - \MA \, (\vx - \vm) - \vb\|^2 \\
   &= \vg^\T(\vx)\, \vg(\vx) 
-  - 2 \, \vg^\T(\vx) \, \MA \, (\vx - \vm) + \tr \left\{ \MA \, (\vx - \vm) \, (\vx - \vm)^\T \, \MA^T \right\} \\
+  - 2 \, \vg^\T(\vx) \, \MA \, (\vx - \vm) + \tr \left\{ \MA \, (\vx - \vm) \, (\vx - \vm)^\T \, \MA^\T \right\} \\
   &\qquad + 2 \, (\vx - \vm)^\T \MA^\T \vb
-    - 2 \vg^\T(\vx) \, \vb + \vb^\T \vb
+    - 2 \vg^\T(\vx) \, \vb + \vb^\T \vb.
 \end{split}
 \nonumber
 \end{equation}
 
-\item Taking expectation gives
+\item Taking \alert{expectation} gives
 %
 \begin{equation}
 \begin{split}
   &\E\left[ \| \vg(\vx) - \MA \, (\vx - \vm) - \vb\|^2 \right] 
   = \E\left[ \vg^\T(\vx) \, \vg(\vx)\right] \\
   &- 2 \, \E\left[ \vg^\T(\vx) \, \MA \, (\vx - \vm) \right] + \tr\left\{ \MA \, \MP \, \MA^\T \right\} 
-  - 2 \, \E\left[ \vg^\T(\vx)\right] \, \vb + \vb^\T \vb
+  - 2 \, \E\left[ \vg^\T(\vx)\right] \, \vb + \vb^\T \vb.
 \end{split}
 \nonumber
 \end{equation}
@@ -253,8 +253,8 @@ w.r.t. some $\vx \sim p(\vx)$ with $\E[\vx] = \vm$ and $\Cov[\vx] = \MP$.
 %
 \begin{equation}
 \begin{split}
-  \frac{\partial \mathrm{MSE}}{\partial \vb} &= - 2 \, \E\left[ \vg(\vx) \right] + 2 \, \vb = 0 \\
-  \frac{\partial \mathrm{MSE}}{\partial \MA} &= -2 \, \E\left[ \vg(\vx) \, (\vx - \vm)^\T \right] + 2 \, \MA \, \MP = 0
+  \frac{\partial \mathrm{MSE}}{\partial \vb} &= - 2 \, \E\left[ \vg(\vx) \right] + 2 \, \vb = 0, \\
+  \frac{\partial \mathrm{MSE}}{\partial \MA} &= -2 \, \E\left[ \vg(\vx) \, (\vx - \vm)^\T \right] + 2 \, \MA \, \MP = 0.
 \end{split}
 \nonumber
 \end{equation}
@@ -263,18 +263,18 @@ w.r.t. some $\vx \sim p(\vx)$ with $\E[\vx] = \vm$ and $\Cov[\vx] = \MP$.
 %
 \begin{equation}
 \begin{split}
-  \vb &= \E\left[ \vg(\vx) \right] \\
+  \vb &= \E\left[ \vg(\vx) \right], \\
   \MA &= \E\left[ \vg(\vx) \, (\vx - \vm)^\T \right] \, \MP^{-1} \\
-  &= \E\left[ (\vg(\vx) - \vb) \, (\vx - \vm)^\T \right] \, \MP^{-1}
+  &= \E\left[ (\vg(\vx) - \vb) \, (\vx - \vm)^\T \right] \, \MP^{-1}.
 \end{split}
 \nonumber
 \end{equation}
 
-\item Thus the \alert{linearization approximation} is, for now
+\item Thus the \alert{linearization} is (with the above $\vb$ and $\MA$)
 %
 \begin{equation}
 \begin{split}
-  \vy = \MA \, (\vx - \vm) + \vb
+  \vy = \MA \, (\vx - \vm) + \vb.
 \end{split}
 \nonumber
 \end{equation}
@@ -291,7 +291,7 @@ w.r.t. some $\vx \sim p(\vx)$ with $\E[\vx] = \vm$ and $\Cov[\vx] = \MP$.
 %
 \begin{equation}
 \begin{split}
-  \E\left[ \MA \, (\vx - \vm) + \vb \right] = \E\left[ \vg(\vx) \right]
+  \E\left[ \MA \, (\vx - \vm) + \vb \right] = \E\left[ \vg(\vx) \right].
 \end{split}
 \nonumber
 \end{equation}
@@ -302,12 +302,14 @@ w.r.t. some $\vx \sim p(\vx)$ with $\E[\vx] = \vm$ and $\Cov[\vx] = \MP$.
 \begin{split}
   &\E\left[ (\MA \, (\vx - \vm) + \vb - \vb) \, (\MA \, (\vx - \vm) + \vb - \vb)^\T \right] \\
   &= \E\left[ \MA \, (\vx - \vm) \, (\vx - \vm)^\T \MA^\T \right] \\
-  &= \MA \, \MP \, \MA^\T \ne \Cov\left[ \vg(\vx) \right]  \qquad  \{ \text{ in general } \}
+  &= \MA \, \MP \, \MA^\T \ne \Cov\left[ \vg(\vx) \right]  \qquad  \{ \text{ in general } \}.
 \end{split}
 \nonumber
 \end{equation}
 
-\item The corresponding filter and smoother have the \alert{same limitations}.
+\item The corresponding SL filter and smoother have the \alert{same limitations}.
+
+\item \alert{But we can fix this!}
 
 \end{itemize}
 \end{frame}
@@ -337,7 +339,7 @@ where $\ve \sim \N(0,\MSigma)$ is a \alert{pseudo-noise}.
 \begin{equation}
 \begin{split}
   &\E\left[ (\MA \, (\vx - \vm) + \vb + \ve - \vb) \, (\MA \, (\vx - \vm) + \vb + \ve - \vb)^\T \right] \\
-  &= \MA \, \MP \, \MA^\T + \MSigma
+  &= \MA \, \MP \, \MA^\T + \MSigma.
 \end{split}
 \nonumber
 \end{equation}
@@ -346,7 +348,7 @@ where $\ve \sim \N(0,\MSigma)$ is a \alert{pseudo-noise}.
 %
 \begin{equation}
 \begin{split}
-  \MSigma = \Cov\left[ \vg(\vx) \right] - \MA \, \MP \, \MA^\T
+  \MSigma = \Cov\left[ \vg(\vx) \right] - \MA \, \MP \, \MA^\T.
 \end{split}
 \nonumber
 \end{equation}
@@ -371,7 +373,7 @@ where $\ve \sim \N(0,\MSigma)$ is a \alert{pseudo-noise}.
 %
 where $\vq_{k-1} \sim \N(0,\MQ)$. 
 
-\item When in SLR we put $\vm = \vm_{k-1}$ and $\MP = \MP_{k-1}$ we get
+\item When in SLR we \alert{select $\vm = \vm_{k-1}$ and $\MP = \MP_{k-1}$} we get
 %
 \begin{equation}
 \begin{split}
@@ -384,9 +386,9 @@ with
 %
 \begin{equation}
 \begin{split}
-  \vb &= \E_{k-1}\left[ \vf(\vx_{k-1}) \right] \\
-  \MF &= \E_{k-1}\left[ (\vf(\vx_{k-1}) - \vb) \, (\vx_{k-1} - \vm_{k-1})^\T \right] \, \MP_{k-1}^{-1} \\
-  \Cov_{k-1}[\ve] &= \Cov_{k-1}\left[ \vf(\vx_{k-1}) \right] - \MF \, \MP_{k-1} \, \MF^\T
+  \vb &= \E_{k-1}\left[ \vf(\vx_{k-1}) \right], \\
+  \MF &= \E_{k-1}\left[ (\vf(\vx_{k-1}) - \vb) \, (\vx_{k-1} - \vm_{k-1})^\T \right] \, \MP_{k-1}^{-1}, \\
+  \Cov_{k-1}[\ve] &= \Cov_{k-1}\left[ \vf(\vx_{k-1}) \right] - \MF \, \MP_{k-1} \, \MF^\T.
 \end{split}
 \nonumber
 \end{equation}
@@ -401,13 +403,13 @@ with
 %
 \begin{equation}
 \begin{split}
-  \vm_k^- &= \E_{k-1}[ \vf(\vx_{k-1}) ] \\
-  \MP_k^- &= \Cov_{k-1}[ \vf(\vx_{k-1}) ] + \MQ
+  \vm_k^- &= \E_{k-1}[ \vf(\vx_{k-1}) ], \\
+  \MP_k^- &= \Cov_{k-1}[ \vf(\vx_{k-1}) ] + \MQ.
 \end{split}
 \nonumber
 \end{equation}
-%
-because the \alert{mean and covariance are exact}.
+
+\item The \alert{mean and covariance are exact} by construction.
 
 \item This is indeed the \alert{Gaussian filter prediction} -- leading to UKFs and other sigma-point filters.
 \end{itemize}
@@ -442,9 +444,9 @@ with
 %
 \begin{equation}
 \begin{split}
- \vmu_k &= \E_k^-[ \vh(\vx_{k})] \\
-  \MH    &= \E_k^-\left[ (\vh(\vx_{k}) - \vmu_k) \, (\vx_{k} - \vm_{k}^-)^\T \right] \, \Big[ P_{k}^- \Big]^{-1} \\
-  \Cov_k^-[e'] &= \Cov_k^-[ \vh(\vx_{k}) ] - \MH \, \MP_{k}^- \, \MH^\T
+ \vmu_k &= \E_k^-[ \vh(\vx_{k})], \\
+  \MH    &= \E_k^-\left[ (\vh(\vx_{k}) - \vmu_k) \, (\vx_{k} - \vm_{k}^-)^\T \right] \, \Big[ \MP_{k}^- \Big]^{-1}, \\
+  \Cov_k^-[\ve'] &= \Cov_k^-[ \vh(\vx_{k}) ] - \MH \, \MP_{k}^- \, \MH^\T.
 \end{split}
 \nonumber
 \end{equation}
@@ -452,17 +454,103 @@ with
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+ \frametitle{Statistical linear regression: update step (cont.)}
+
+\begin{itemize}[<+->]
+\item The \alert{joint mean and covariance} of $\vx_k$ and $\vy_k$ are given as
+%
+\begin{equation}
+\begin{split}
+  \E_k^-\left[ \begin{pmatrix} \vx_k \\ \vy_k \end{pmatrix} \right]
+  &= \begin{pmatrix} \vm_k^- \\ \vmu_k \end{pmatrix} \\
+  \Cov_k^-\left[ \begin{pmatrix} \vx_k \\ \vy_k \end{pmatrix} \right]
+  &= \begin{pmatrix}
+     \MP_k^-  & \E_k^-\left[ (\vx_{k} - \vm_{k}^-) \, (\vh(\vx_{k}) - \vmu_k)^\T \right] \\
+      (\bullet)^\T & \Cov_k^-[ \vh(\vx_{k}) ] + \MR
+      \end{pmatrix}
+\end{split}
+\nonumber
+\end{equation}
+
+\item \alert{Gaussian conditioning} leads to Gaussian filter update step
+%
+{\small
+\begin{equation}
+\begin{split}
+  \vmu_k &= \E_k^-[ \vh(\vx_{k}) ] \\
+   \MS_k &= \Cov_k^-[ \vh(\vx_{k}) ] + \MR \\
+   \MC_k &= \E_k^-\left[ (\vx_{k} - \vm_{k}^-) (\vh(\vx_{k}) - \vmu_k)^\T \right] \\
+   \MK_k &= \MC_k \, \MS_k^{-1} \\
+   \vm_k &= \vm_k^- + \MK_k \, (\vy_k - \vmu_k) \\
+   \MP_k &= \MP_k^- - \MK_k \, \MS_k \, \MK_k^\T,
+\end{split}
+\nonumber
+\end{equation}
+}
+\end{itemize}
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Discussion and connections}
+
+\begin{frame}
+\frametitle{Discussion and connections}
+
+\begin{itemize}[<+->]
+\item Statistical linear regression leads to the \alert{Gaussian filter} -- and to UKF, CKF, GHKF, etc.
+
+\item The corresponding \alert{smoother} can be derived similarly.
+
+\item We have \alert{arbitrarily chosen} to do the SLR \alert{w.r.t. priors} $\N(\vm_{k-1},\MP_{k-1})$ and $\N(\vm_k^-,\MP_k^-)$ -- 
+
+\begin{itemize}[<+->]
+\item We don't need to do that, we can use any $\vx \sim p(\vx)$.
+\item Leads to e.g. posterior-linearization filters and smoothers that \'Angel will talk about next.
+\end{itemize}
+
+\item \alert{Statistical linearization} corresponds to putting $\ve = 0$ in 
+%
+\begin{equation}
+\begin{split}
+  \vy = \MA \, \vx + \vb + \ve.
+\end{split}
+\nonumber
+\end{equation}
+
+\item We recover the \alert{statistically linearized filter}.
+
+\item If we do the statistical linearization with \alert{prior means} and take $\MP_k \to 0$, $\MP_k^-
+\to 0$ we obtain the \alert{EKF}.
+
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary}
 
 \begin{frame}{Summary}
 \begin{itemize}[<+->]
-\item Gaussian processes (GPs) can be used as \alert{priors in inverse problems}.
-\item Applications in e.g. \alert{brain imaging, tomography, positioning, and Kriging}.
-\item GPs have representations as \alert{solutions to SPDEs}.
-\item SPDE methods can be used to \alert{speed up GP inference}.
-\item In temporal models we can use \alert{Kalman/Bayesian filters and smoothers}.
-\item Opens up new paths towards \alert{non-linear GP models}.
+\item In \alert{statistical linearization (SL)} we approximate $\vy = \vg(\vx)$ as $\vy = \MA \, (\vx - \vm) + \vb$, where $\MA$ and $\vb$ are selected to minimize
+%
+\begin{equation}
+\begin{split}
+  \mathrm{MSE}(\MA,\vb) = \E\left[ \| \vg(|vx) - \MA \, \vx - \vb \|^2 \right].
+\end{split}
+\nonumber
+\end{equation}
+
+\item In \alert{statistical linear regression (SLR)} we use $\vy = \MA \, \vx + \vb + \ve$, where $\ve$ is a Gaussian pseudo-noise that makes the covariance exact.
+
+\item  By forming a filter with SLR we get \alert{Gaussian filter, UKFs, and other related filters}.
+
+\item By using SL we get the classical \alert{statistically linearized filter} and also \alert{EKF} as a special case.
+
+\item We can also do SL and SLR w.r.t. \alert{other than the prior} -- leading to posterior linearization filters (and smoothers).
 \end{itemize}
 \end{frame}
 
